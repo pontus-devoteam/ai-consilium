@@ -1,0 +1,81 @@
+name: Release & Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Force specific release type (optional)'
+        required: false
+        type: choice
+        options:
+          - auto
+          - patch
+          - minor
+          - major
+        default: 'auto'
+
+jobs:
+  version-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Commit changes if working directory is not clean
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add .
+            git commit -m "chore: update dependencies [skip ci]"
+          fi
+      
+      - name: Determine version bump
+        id: version
+        run: |
+          if [ "${{ github.event.inputs.release_type }}" != "auto" ]; then
+            echo "bump=${{ github.event.inputs.release_type }}" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          COMMITS=$(git log $(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)..HEAD --format=%s)
+          
+          if echo "$COMMITS" | grep -q "^feat\|^feat(.*):"; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+          elif echo "$COMMITS" | grep -q "^chore\|^chore(.*):"; then
+            echo "bump=minor" >> $GITHUB_OUTPUT
+          elif echo "$COMMITS" | grep -q "^fix\|^fix(.*):"; then
+            echo "bump=patch" >> $GITHUB_OUTPUT
+          else
+            echo "bump=patch" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Bump version
+        run: |
+          npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]"
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Publish to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Push changes
+        run: git push --follow-tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

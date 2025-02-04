@@ -1,6 +1,6 @@
 {
   "name": "ai-consilium",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "A AI Codegen Planner for new projects to get started quick with generating instructions based on any source of data. It outputs MD files and correct configuration for any dev to run this with Continue AI.",
   "main": "index.ts",
   "bin": {
