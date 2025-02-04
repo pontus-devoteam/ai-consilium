@@ -16,15 +16,6 @@ interface OpenAIModel {
 
 const MAJOR_LLM_PROVIDERS = [
   'OpenAI',
-  'Anthropic',
-  'Google AI',
-  'Cohere',
-  'AI21 Labs',
-  'Mistral AI',
-  'Meta AI',
-  'Amazon Bedrock',
-  'Azure OpenAI',
-  'HuggingFace',
 ] as const;
 
 type LLMProvider = typeof MAJOR_LLM_PROVIDERS[number];
