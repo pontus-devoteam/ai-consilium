@@ -11,19 +11,8 @@ It can also be widely configured to support different LLM providers and models, 
 
 ## Installation
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/pontus-devoteam/ai-consilium.git
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Build and link the CLI tool:
-```bash
-npm run build
+npm i ai-consilium -g
 ```
 
 This will make the `ai-consilium` command available globally on your system.
