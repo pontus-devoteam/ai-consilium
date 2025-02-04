@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",            // Output directory for compiled JavaScript
+    "rootDir": "./src",            // Root directory of your source files
+    "module": "CommonJS",          // Module system compatible with Node.js
+    "target": "ES2020",            // Target ECMAScript version
+    "strict": true,                // Enable strict type checking
+    "esModuleInterop": true,       // Enable ES Module compatibility
+    "resolveJsonModule": true,     // Allow importing JSON files
+    "skipLibCheck": true           // Skip type checking for .d.ts files
+  },
+  "include": ["src/**/*"],         // Include all files in the src folder
+  "exclude": ["node_modules"]      // Exclude node_modules from compilation
+}

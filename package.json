@@ -1,0 +1,35 @@
+{
+  "name": "ai-consilium",
+  "version": "0.0.1",
+  "description": "A AI Codegen Planner for new projects to get started quick with generating instructions based on any source of data. It outputs MD files and correct configuration for any dev to run this with Continue AI.",
+  "main": "index.ts",
+  "bin": {
+    "ai-consilium": "./dist/lib/cli.js"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "chmod": "chmod +x dist/lib/cli.js",
+    "prebuild": "npm run clean",
+    "postbuild": "npm link",
+    "build": "tsc && npm run chmod"
+  },
+  "author": "Pontus Espe",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cli-progress": "^3.11.6",
+    "@types/node": "^22.10.7",
+    "axios": "^1.7.9",
+    "boxen": "^8.0.1",
+    "chalk": "^4.1.2",
+    "cli-progress": "^3.12.0",
+    "commander": "^13.1.0",
+    "inquirer": "^8.2.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/inquirer": "^8.2.10",
+    "rimraf": "^6.0.1"
+  }
+}
