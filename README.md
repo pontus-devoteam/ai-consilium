@@ -13,8 +13,7 @@ It can also be widely configured to support different LLM providers and models, 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/pontus-devoteam/ai-planner.git
-cd devoteam-codegen-planner
+git clone https://github.com/pontus-devoteam/ai-consilium.git
 ```
 
 2. Install dependencies:
@@ -79,4 +78,14 @@ The tool creates a `.ai-consilium.json` file in your project directory that stor
 
 ## License
 
-ISC License - See LICENSE file for details 
+This project is licensed under MIT with Commons Clause - see the [LICENSE.md](license.md) file for details.
+
+The license allows for:
+- Free usage of the software
+- Commercial use (with restrictions on competing products)
+- Modifications for personal/internal use
+
+While requiring:
+- Permission for redistribution of source code
+- No creation of competing products or services
+- Inclusion of the original license and copyright notice 
