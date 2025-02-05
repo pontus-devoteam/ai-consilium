@@ -1,0 +1,82 @@
+{
+  "mode": "Local",
+  "lmStudio": {
+    "domain": "localhost:1234",
+    "selectedModel": "qwen2.5-coder-3b-instruct",
+    "parameters": {
+      "temperature": 0.2,
+      "maxTokens": 10000,
+      "topK": 200
+    }
+  },
+  "hostedProvider": {
+    "name": null,
+    "apiKey": null
+  },
+  "infrastructure": {},
+  "context": {
+    "infrastructure": {
+      "project_name": "DemoBackend",
+      "project_type": "REST API Backend",
+      "core_requirements": [
+        "File Storage",
+        "User Authentication",
+        "Search Functionality",
+        "API Gateway"
+      ],
+      "cloud_provider": "AWS",
+      "deployment_model": "Serverless (e.g., AWS Lambda, Azure Functions)",
+      "database_service": "Amazon DynamoDB",
+      "additional_services": [
+        "CI/CD Pipeline"
+      ],
+      "auth_service": "Amazon Cognito"
+    },
+    "answeredQuestions": [
+      "project_name",
+      "project_type",
+      "core_requirements",
+      "cloud_provider",
+      "deployment_model",
+      "database_service",
+      "additional_services",
+      "auth_service"
+    ],
+    "dependencies": {
+      "project_type": [
+        "project_features"
+      ],
+      "core_requirements": [
+        "project_features",
+        "project_type"
+      ],
+      "cloud_provider": [
+        "project_type",
+        "core_requirements"
+      ],
+      "deployment_model": [
+        "project_type",
+        "core_requirements",
+        "cloud_provider"
+      ],
+      "database_service": [
+        "project_type",
+        "core_requirements",
+        "cloud_provider"
+      ],
+      "additional_services": [
+        "project_name",
+        "project_type",
+        "core_requirements",
+        "cloud_provider",
+        "deployment_model",
+        "database_service"
+      ],
+      "auth_service": [
+        "project_type",
+        "core_requirements",
+        "cloud_provider"
+      ]
+    }
+  }
+}

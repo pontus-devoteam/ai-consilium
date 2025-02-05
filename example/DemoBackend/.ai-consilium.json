@@ -1,0 +1,213 @@
+{
+  "projectName": "DemoBackend",
+  "context": {
+    "infrastructure": {
+      "project_name": "DemoBackend",
+      "project_type": "REST API Backend",
+      "core_requirements": [
+        "File Storage",
+        "User Authentication",
+        "Search Functionality",
+        "API Gateway"
+      ],
+      "cloud_provider": "AWS",
+      "deployment_model": "Serverless (e.g., AWS Lambda, Azure Functions)",
+      "database_service": "Amazon DynamoDB",
+      "additional_services": [
+        "CI/CD Pipeline"
+      ],
+      "auth_service": "Amazon Cognito"
+    },
+    "answeredQuestions": {},
+    "dependencies": {
+      "project_type": [
+        "project_features"
+      ],
+      "core_requirements": [
+        "project_features",
+        "project_type"
+      ],
+      "cloud_provider": [
+        "project_type",
+        "core_requirements"
+      ],
+      "deployment_model": [
+        "project_type",
+        "core_requirements",
+        "cloud_provider"
+      ],
+      "database_service": [
+        "project_type",
+        "core_requirements",
+        "cloud_provider"
+      ],
+      "additional_services": [
+        "project_name",
+        "project_type",
+        "core_requirements",
+        "cloud_provider",
+        "deployment_model",
+        "database_service"
+      ],
+      "auth_service": [
+        "project_type",
+        "core_requirements",
+        "cloud_provider"
+      ]
+    }
+  },
+  "messages": [
+    {
+      "role": "system",
+      "content": "\nCore Objective\nYou are a project specification engine that MUST ONLY respond with valid JSON objects. Never include any explanatory text or natural language outside the JSON.\n\nResponse Structure\nAlways respond with a SINGLE JSON object in this exact format:\n{\n  \"key\": \"unique_question_identifier\",\n  \"question\": \"Specific technical question\",\n  \"type\": \"list\" | \"multiple\" | \"text\",\n  \"options\": [\"Relevant choices\"],\n  \"satisfied\": false,\n  \"documents\": [],\n  \"dependencies\": {\n    \"question_key\": [\"dependent_key1\", \"dependent_key2\"]\n  }\n}\n\nQuestion Flow:\n1. project_features (first question, text input to describe core features)\n2. project_type (based on features, e.g., API, Web App, Mobile Backend)\n3. core_requirements (multiple choice based on project_type)\n4. cloud_provider (based on requirements)\n5. deployment_model (based on provider and requirements)\n6. database_service (based on provider and features)\n7. auth_service (based on provider and features)\n8. additional_services (based on all previous answers)\n\nExample Valid Responses:\n\n1. First Question (Always):\n{\n  \"key\": \"project_features\",\n  \"question\": \"Please describe the core features and functionality your project needs to support. Include any specific requirements or constraints.\",\n  \"type\": \"text\",\n  \"options\": [],\n  \"satisfied\": false,\n  \"documents\": [],\n  \"dependencies\": {}\n}\n\n2. After Features Described:\n{\n  \"key\": \"project_type\",\n  \"question\": \"Based on your features, what type of project are you building?\",\n  \"type\": \"list\",\n  \"options\": [\n    \"REST API Backend\",\n    \"Real-time Backend\",\n    \"Web Application Backend\",\n    \"Mobile Application Backend\",\n    \"Microservices Architecture\",\n    \"Data Processing Pipeline\",\n    \"Content Management System\"\n  ],\n  \"satisfied\": false,\n  \"documents\": [],\n  \"dependencies\": {\n    \"project_type\": [\"project_features\"]\n  }\n}\n\n3. Core Requirements:\n{\n  \"key\": \"core_requirements\",\n  \"question\": \"Which of the following capabilities does your project require?\",\n  \"type\": \"multiple\",\n  \"options\": [\n    \"Real-time Data Processing\",\n    \"File Storage\",\n    \"User Authentication\",\n    \"Payment Processing\",\n    \"Email/Notification Service\",\n    \"Data Analytics\",\n    \"Search Functionality\",\n    \"Media Processing\",\n    \"Background Jobs\",\n    \"API Gateway\",\n    \"Caching Layer\"\n  ],\n  \"satisfied\": false,\n  \"documents\": [],\n  \"dependencies\": {\n    \"core_requirements\": [\"project_features\", \"project_type\"]\n  }\n}\n\nProvider Options Map:\n{\n  \"AWS\": {\n    \"deployment\": [\"AWS Lambda\", \"Amazon ECS\", \"Amazon EKS\", \"AWS App Runner\", \"AWS Fargate\"],\n    \"database\": [\"Amazon RDS\", \"Amazon DynamoDB\", \"Amazon Aurora\", \"Amazon DocumentDB\", \"Amazon ElastiCache\"],\n    \"storage\": [\"Amazon S3\", \"Amazon EFS\", \"Amazon FSx\"],\n    \"auth\": [\"Amazon Cognito\", \"AWS IAM\", \"AWS SSO\"],\n    \"realtime\": [\"AWS AppSync\", \"Amazon Kinesis\"],\n    \"queue\": [\"Amazon SQS\", \"Amazon EventBridge\"],\n    \"cache\": [\"Amazon ElastiCache\", \"DAX\"],\n    \"search\": [\"Amazon OpenSearch\", \"Amazon Kendra\"],\n    \"analytics\": [\"Amazon QuickSight\", \"Amazon Athena\"]\n  },\n  \"Azure\": {\n    \"deployment\": [\"Azure Functions\", \"Azure Container Apps\", \"Azure Kubernetes Service\", \"Azure App Service\"],\n    \"database\": [\"Azure SQL\", \"Azure Cosmos DB\", \"Azure Database for PostgreSQL\", \"Azure Cache for Redis\"],\n    \"storage\": [\"Azure Blob Storage\", \"Azure Files\", \"Azure NetApp Files\"],\n    \"auth\": [\"Azure Active Directory\", \"Azure AD B2C\", \"Managed Identities\"],\n    \"realtime\": [\"Azure SignalR Service\", \"Azure Event Hub\"],\n    \"queue\": [\"Azure Service Bus\", \"Azure Queue Storage\"],\n    \"cache\": [\"Azure Cache for Redis\", \"Azure CDN\"],\n    \"search\": [\"Azure Cognitive Search\", \"Azure Bot Service\"],\n    \"analytics\": [\"Azure Synapse Analytics\", \"Azure Analysis Services\"]\n  },\n  \"GCP\": {\n    \"deployment\": [\"Cloud Functions\", \"Cloud Run\", \"Google Kubernetes Engine\", \"App Engine\"],\n    \"database\": [\"Cloud SQL\", \"Cloud Spanner\", \"Cloud Bigtable\", \"Cloud Firestore\", \"Cloud Memorystore\"],\n    \"storage\": [\"Cloud Storage\", \"Filestore\"],\n    \"auth\": [\"Firebase Auth\", \"Cloud Identity\", \"Identity Platform\"],\n    \"realtime\": [\"Cloud Pub/Sub\", \"Firebase Realtime Database\"],\n    \"queue\": [\"Cloud Tasks\", \"Cloud Pub/Sub\"],\n    \"cache\": [\"Cloud Memorystore\", \"Cloud CDN\"],\n    \"search\": [\"Cloud Search\", \"Vertex AI Search\"],\n    \"analytics\": [\"BigQuery\", \"Looker\"]\n  }\n}\n\nCritical Rules:\n1. ONLY output a SINGLE valid JSON object\n2. NO text before or after the JSON\n3. NO explanations or comments\n4. Always use provider-specific options based on previous answers\n5. Never repeat already answered questions\n6. Track dependencies between questions\n7. Use snake_case for all keys\n8. Ensure all required fields are present\n9. Options must be relevant to the chosen provider\n10. Set satisfied: true only when all core services are selected\n11. Use project features to guide service recommendations\n12. Adapt questions based on project requirements\n\nRequired Fields in Every Response:\n- key (string, snake_case)\n- question (string)\n- type (\"list\" | \"multiple\" | \"text\")\n- options (array, can be empty for text type)\n- satisfied (boolean)\n- documents (array)\n- dependencies (object)\n"
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"project_name\",\"type\":\"text\",\"question\":\"What is the name of your project?\",\"satisfied\":false,\"documents\":[],\"options\":[],\"dependencies\":{}}"
+    },
+    {
+      "role": "user",
+      "content": "DemoBackend"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question. Note that project_name is already answered."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"project_type\",\"question\":\"Based on your features, what type of project are you building?\",\"type\":\"list\",\"options\":[\"REST API Backend\",\"Real-time Backend\",\"Web Application Backend\",\"Mobile Application Backend\",\"Microservices Architecture\",\"Data Processing Pipeline\",\"Content Management System\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"project_type\":[\"project_features\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "REST API Backend"
+    },
+    {
+      "role": "system",
+      "content": "{\"type\":\"context\",\"infrastructure\":{\"project_name\":\"DemoBackend\",\"project_type\":\"REST API Backend\"},\"answeredQuestions\":[\"project_name\",\"project_type\"]}"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"core_requirements\",\"question\":\"Which of the following capabilities does your project require?\",\"type\":\"multiple\",\"options\":[\"Real-time Data Processing\",\"File Storage\",\"User Authentication\",\"Payment Processing\",\"Email/Notification Service\",\"Data Analytics\",\"Search Functionality\",\"Media Processing\",\"Background Jobs\",\"API Gateway\",\"Caching Layer\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"core_requirements\":[\"project_features\",\"project_type\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "File Storage, User Authentication, Search Functionality, API Gateway"
+    },
+    {
+      "role": "system",
+      "content": "{\"type\":\"context\",\"infrastructure\":{\"project_name\":\"DemoBackend\",\"project_type\":\"REST API Backend\",\"core_requirements\":[\"File Storage\",\"User Authentication\",\"Search Functionality\",\"API Gateway\"]},\"answeredQuestions\":[\"project_name\",\"project_type\",\"core_requirements\"]}"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"cloud_provider\",\"question\":\"Which cloud provider do you prefer for your project?\",\"type\":\"list\",\"options\":[\"AWS\",\"Azure\",\"GCP\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"cloud_provider\":[\"project_type\",\"core_requirements\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "AWS"
+    },
+    {
+      "role": "system",
+      "content": "{\"type\":\"context\",\"infrastructure\":{\"project_name\":\"DemoBackend\",\"project_type\":\"REST API Backend\",\"core_requirements\":[\"File Storage\",\"User Authentication\",\"Search Functionality\",\"API Gateway\"],\"cloud_provider\":\"AWS\"},\"answeredQuestions\":[\"project_name\",\"project_type\",\"core_requirements\",\"cloud_provider\"]}"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"deployment_model\",\"question\":\"Based on your cloud provider and requirements, what deployment model do you prefer?\",\"type\":\"list\",\"options\":[\"Serverless (e.g., AWS Lambda, Azure Functions)\",\"Containerized (e.g., Docker, Kubernetes)\",\"Managed (e.g., AWS App Service, Azure Container Apps)\",\"Custom Infrastructure\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"deployment_model\":[\"project_type\",\"core_requirements\",\"cloud_provider\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "Serverless (e.g., AWS Lambda, Azure Functions)"
+    },
+    {
+      "role": "system",
+      "content": "{\"type\":\"context\",\"infrastructure\":{\"project_name\":\"DemoBackend\",\"project_type\":\"REST API Backend\",\"core_requirements\":[\"File Storage\",\"User Authentication\",\"Search Functionality\",\"API Gateway\"],\"cloud_provider\":\"AWS\",\"deployment_model\":\"Serverless (e.g., AWS Lambda, Azure Functions)\"},\"answeredQuestions\":[\"project_name\",\"project_type\",\"core_requirements\",\"cloud_provider\",\"deployment_model\"]}"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"database_service\",\"question\":\"Based on your cloud provider and requirements, which database service do you prefer?\",\"type\":\"list\",\"options\":[\"Amazon RDS\",\"Amazon DynamoDB\",\"Amazon Aurora\",\"Amazon DocumentDB\",\"Amazon ElastiCache\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"database_service\":[\"project_type\",\"core_requirements\",\"cloud_provider\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "Amazon DynamoDB"
+    },
+    {
+      "role": "system",
+      "content": "{\"type\":\"context\",\"infrastructure\":{\"project_name\":\"DemoBackend\",\"project_type\":\"REST API Backend\",\"core_requirements\":[\"File Storage\",\"User Authentication\",\"Search Functionality\",\"API Gateway\"],\"cloud_provider\":\"AWS\",\"deployment_model\":\"Serverless (e.g., AWS Lambda, Azure Functions)\",\"database_service\":\"Amazon DynamoDB\"},\"answeredQuestions\":[\"project_name\",\"project_type\",\"core_requirements\",\"cloud_provider\",\"deployment_model\",\"database_service\"]}"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"database_service\",\"question\":\"Based on your cloud provider and requirements, which database service do you prefer?\",\"type\":\"list\",\"options\":[\"Amazon RDS\",\"Amazon DynamoDB\",\"Amazon Aurora\",\"Amazon DocumentDB\",\"Amazon ElastiCache\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"database_service\":[\"project_type\",\"core_requirements\",\"cloud_provider\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "database_service was already answered. Please ask a different question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"additional_services\",\"question\":\"Which additional services do you need for your project? (Select all that apply)\",\"type\":\"multiple\",\"options\":[\"Database Backup and Recovery\",\"Monitoring and Logging\",\"CI/CD Pipeline\",\"Security Tools\",\"Data Encryption\",\"API Documentation\",\"Integration with Other Systems\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"additional_services\":[\"project_name\",\"project_type\",\"core_requirements\",\"cloud_provider\",\"deployment_model\",\"database_service\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "CI/CD Pipeline"
+    },
+    {
+      "role": "system",
+      "content": "{\"type\":\"context\",\"infrastructure\":{\"project_name\":\"DemoBackend\",\"project_type\":\"REST API Backend\",\"core_requirements\":[\"File Storage\",\"User Authentication\",\"Search Functionality\",\"API Gateway\"],\"cloud_provider\":\"AWS\",\"deployment_model\":\"Serverless (e.g., AWS Lambda, Azure Functions)\",\"database_service\":\"Amazon DynamoDB\",\"additional_services\":[\"CI/CD Pipeline\"]},\"answeredQuestions\":[\"project_name\",\"project_type\",\"core_requirements\",\"cloud_provider\",\"deployment_model\",\"database_service\",\"additional_services\"]}"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"additional_services\",\"question\":\"Which additional services do you need for your project? (Select all that apply)\",\"type\":\"multiple\",\"options\":[\"Database Backup and Recovery\",\"Monitoring and Logging\",\"CI/CD Pipeline\",\"Security Tools\",\"Data Encryption\",\"API Documentation\",\"Integration with Other Systems\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"additional_services\":[\"project_name\",\"project_type\",\"core_requirements\",\"cloud_provider\",\"deployment_model\",\"database_service\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "additional_services was already answered. Please ask a different question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"auth_service\",\"question\":\"Based on your cloud provider and requirements, which authentication service do you prefer?\",\"type\":\"list\",\"options\":[\"Amazon Cognito\",\"AWS IAM\",\"AWS SSO\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"auth_service\":[\"project_type\",\"core_requirements\",\"cloud_provider\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "Amazon Cognito"
+    },
+    {
+      "role": "system",
+      "content": "{\"type\":\"context\",\"infrastructure\":{\"project_name\":\"DemoBackend\",\"project_type\":\"REST API Backend\",\"core_requirements\":[\"File Storage\",\"User Authentication\",\"Search Functionality\",\"API Gateway\"],\"cloud_provider\":\"AWS\",\"deployment_model\":\"Serverless (e.g., AWS Lambda, Azure Functions)\",\"database_service\":\"Amazon DynamoDB\",\"additional_services\":[\"CI/CD Pipeline\"],\"auth_service\":\"Amazon Cognito\"},\"answeredQuestions\":[\"project_name\",\"project_type\",\"core_requirements\",\"cloud_provider\",\"deployment_model\",\"database_service\",\"additional_services\",\"auth_service\"]}"
+    },
+    {
+      "role": "user",
+      "content": "Continue with the next question."
+    },
+    {
+      "role": "system",
+      "content": "{\"key\":\"auth_service\",\"question\":\"Based on your cloud provider and requirements, which authentication service do you prefer?\",\"type\":\"list\",\"options\":[\"Amazon Cognito\",\"AWS IAM\",\"AWS SSO\"],\"satisfied\":false,\"documents\":[],\"dependencies\":{\"auth_service\":[\"project_type\",\"core_requirements\",\"cloud_provider\"]}}"
+    },
+    {
+      "role": "user",
+      "content": "auth_service was already answered. Please ask a different question."
+    }
+  ]
+}
