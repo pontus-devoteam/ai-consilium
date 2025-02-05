@@ -203,7 +203,6 @@ export class LLMHandler {
             model: this.config.hostedProvider.selectedModel || 'gpt-4-turbo-preview',
             temperature: parameters.temperature,
             max_tokens: parameters.maxTokens,
-            top_k: parameters.topK,
           };
         case 'Anthropic':
           return {

@@ -43,6 +43,12 @@ jobs:
             git commit -m "chore: update dependencies [skip ci]"
           fi
       
+      - name: Get current version
+        id: current_version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+      
       - name: Determine version bump
         id: version
         run: |
@@ -63,9 +69,17 @@ jobs:
             echo "bump=patch" >> $GITHUB_OUTPUT
           fi
       
+      - name: Remove existing version tag if exists
+        run: |
+          CURRENT_VERSION="${{ steps.current_version.outputs.version }}"
+          if git rev-parse "v$CURRENT_VERSION" >/dev/null 2>&1; then
+            git tag -d "v$CURRENT_VERSION"
+            git push origin ":refs/tags/v$CURRENT_VERSION" || true
+          fi
+      
       - name: Bump version
         run: |
-          npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]"
+          npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]" --force
       
       - name: Build
         run: npm run build
