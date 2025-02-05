@@ -16,9 +16,18 @@
   "author": "Pontus Espe",
   "license": "MIT with Commons Clause",
   "dependencies": {
+    "axios": "^1.7.9",
+    "chalk": "^4.1.2",
+    "cli-boxes": "^4.0.1",
+    "cli-progress": "^3.12.0",
+    "commander": "^11.1.0",
+    "inquirer": "^8.2.6",
+    "ora": "^5.4.1",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
+    "@types/cli-progress": "^3.11.6",
     "@types/inquirer": "^8.2.10",
     "rimraf": "^6.0.1"
   }
