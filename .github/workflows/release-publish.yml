@@ -13,6 +13,11 @@ on:
           - minor
           - major
         default: 'auto'
+      release_notes:
+        description: 'Release notes'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   version-and-publish:
@@ -79,10 +84,38 @@ jobs:
       
       - name: Bump version
         run: |
-          npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]" --force
+          RELEASE_NOTES="${{ github.event.inputs.release_notes }}"
+          if [ -n "$RELEASE_NOTES" ]; then
+            npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]
+
+            $RELEASE_NOTES" --force
+          else
+            npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]" --force
+          fi
       
       - name: Build
         run: npm run build
+      
+      - name: Create GitHub Release
+        if: github.event.inputs.release_notes != ''
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.current_version.outputs.version }}
+          body: ${{ github.event.inputs.release_notes }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update package.json with release notes
+        if: github.event.inputs.release_notes != ''
+        run: |
+          node -e '
+            const fs = require("fs");
+            const pkg = JSON.parse(fs.readFileSync("package.json"));
+            pkg.releaseNotes = process.env.RELEASE_NOTES;
+            fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
+          ' 
+        env:
+          RELEASE_NOTES: ${{ github.event.inputs.release_notes }}
       
       - name: Publish to NPM
         run: npm publish
