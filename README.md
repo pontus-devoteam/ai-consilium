@@ -19,6 +19,17 @@ This will make the `ai-consilium` command available globally on your system.
 
 ## Usage
 
+### Available Commands
+
+- `ai-consilium configure` - Set up your LLM provider, model & various settings
+- `ai-consilium generate <project-name>` - Generate new project documentation
+
+### Planned Commands
+
+We're working on additional commands to improve the documentation workflow:
+- `ai-consilium edit <doc-name>` - Edit specific documentation sections
+- `ai-consilium remove <doc-name>` - Remove specific documentation sections
+
 ### Select LLM Model
 
 Before generating documentation, run configure to set up your LLM provider and model & various settings.
@@ -77,4 +88,50 @@ The license allows for:
 While requiring:
 - Permission for redistribution of source code
 - No creation of competing products or services
-- Inclusion of the original license and copyright notice 
+- Inclusion of the original license and copyright notice
+
+## Contributing
+
+We welcome contributions to AI Consilium! Here's how you can help:
+
+### Development Setup
+
+1. Fork the repository
+2. Clone your fork:
+   ```bash
+   git clone https://github.com/your-username/ai-consilium.git
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Create a new branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+### Making Changes
+
+1. Make your changes
+2. Run tests:
+   ```bash
+   npm test
+   ```
+3. Commit your changes using conventional commits:
+   ```bash
+   git commit -m "feat: add new feature"
+   ```
+4. Push to your fork:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Open a Pull Request
+
+### Commit Convention
+
+We use conventional commits to maintain a clear history:
+- `feat:` - New features
+- `fix:` - Bug fixes
+- `docs:` - Documentation changes
+- `chore:` - Maintenance tasks
+- `test:` - Adding or updating tests
