@@ -4,13 +4,15 @@ import { saveConfig, loadConfig } from '../utils/config';
 import chalk from 'chalk';
 import { Command } from 'commander';
 
+interface LMStudioModel {
+  id: string;
+}
+
 interface OpenAIModel {
   id: string;
   created: number;
   owned_by: string;
 }
-
-// No changes needed for the OpenAI interface
 
 const SUPPORTED_PROVIDERS = [
   'OpenAI',
@@ -20,34 +22,31 @@ const SUPPORTED_PROVIDERS = [
 type LLMProvider = typeof SUPPORTED_PROVIDERS[number];
 
 async function fetchOpenAIModels(apiKey: string): Promise<string[]> {
-    // ... (Your existing fetchOpenAIModels function - no changes needed here) ...
-    try {
-        const response = await axios.get<{ data: OpenAIModel[] }>('https://api.openai.com/v1/models', {
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-        });
+  try {
+    const response = await axios.get<{ data: OpenAIModel[] }>('https://api.openai.com/v1/models', {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-        return response.data.data
-          .filter(model => model.id.includes('gpt'))
-          .sort((a, b) => b.created - a.created)
-          .map(model => model.id);
-      } catch (error) {
-        console.error(chalk.red('Failed to fetch OpenAI models:'), error instanceof Error ? error.message : 'Unknown error');
-        throw error; // Re-throw the error
-      }
+    return response.data.data
+      .filter(model => model.id.includes('gpt'))
+      .sort((a, b) => b.created - a.created)
+      .map(model => model.id);
+  } catch (error) {
+    console.error(chalk.red('Failed to fetch OpenAI models:'), error instanceof Error ? error.message : 'Unknown error');
+    throw error; // Re-throw the error
+  }
 }
 
 // Add a function to fetch Gemini models
-async function fetchGeminiModels(): Promise<string[]> { // No API key needed here
+async function fetchGeminiModels(): Promise<string[]> {
   try {
     const response = await axios.get(
-      'https://generativelanguage.googleapis.com/v1beta/models', { // Correct URL
+      'https://generativelanguage.googleapis.com/v1beta/models?key=' + process.env.GOOGLE_API_KEY, {
         headers: {
           'Content-Type': 'application/json',
-           //crucial to add here for this specific endpoint.
-          'x-goog-api-key': process.env.GOOGLE_API_KEY  // Use environment variable
         },
       });
       // console.log(response.data); //good for debugging
@@ -56,9 +55,7 @@ async function fetchGeminiModels(): Promise<string[]> { // No API key needed her
       return response.data.models
         .filter((model: { name: string; supportedGenerationMethods: string[ ]}) =>
     model.supportedGenerationMethods.includes("generateContent")
-)
-.map((model: { name: string; supportedGenerationMethods: string[] }) => model.name);
-
+      )
   } catch (error) {
     console.error(chalk.red('Failed to fetch Gemini models:'), error instanceof Error ? error.message : 'Unknown error', error);
     throw error; // Re-throw the error
@@ -88,7 +85,6 @@ export async function handleConfigure(): Promise<void> {
         }]);
 
         if (useLMStudio) {
-          // ... (rest of LM Studio config, same as before) ...
           const { domain } = await inquirer.prompt<{ domain: string }>([{
             type: 'input',
             name: 'domain',
@@ -167,7 +163,7 @@ export async function handleConfigure(): Promise<void> {
       type: 'list',
       name: 'provider',
       message: 'Select your LLM provider:',
-      choices: SUPPORTED_PROVIDERS,
+      choices: SUPPORTED_PROVIDERS, // Now only OpenAI and Google AI
       default: 'OpenAI',
     }]);
 
@@ -203,8 +199,7 @@ export async function handleConfigure(): Promise<void> {
         return 'Max tokens must be greater than 0';
       }
     }]);
-
-    const { topK } = await inquirer.prompt<{ topK: number }>([{
+      const { topK } = await inquirer.prompt<{ topK: number }>([{
         type: 'number',
         name: 'topK',
         message: 'Enter top K (number of tokens to consider for each step):',
@@ -213,7 +208,7 @@ export async function handleConfigure(): Promise<void> {
           if (value > 0) return true;
           return 'Top K must be greater than 0';
         }
-    }]);
+      }]);
 
     config.hostedProvider = {
       name: provider,
