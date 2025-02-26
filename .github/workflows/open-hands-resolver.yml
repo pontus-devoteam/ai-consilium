@@ -24,10 +24,10 @@ jobs:
       macro: ${{ vars.OPENHANDS_MACRO || '@openhands-agent' }}
       max_iterations: ${{ fromJson(vars.OPENHANDS_MAX_ITER || 50) }}
       base_container_image: ${{ vars.OPENHANDS_BASE_CONTAINER_IMAGE || '' }}
-      LLM_MODEL: ${{ vars.LLM_MODEL || 'anthropic/claude-3-5-sonnet-20241022' }}
+      LLM_MODEL: 'claude-3-7-sonnet-latest'
       target_branch: ${{ vars.TARGET_BRANCH || 'main' }}
     secrets:
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       PAT_USERNAME: ${{ secrets.PAT_USERNAME }}
       LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-      LLM_BASE_URL: https://api.anthropic.com/v1
+      LLM_BASE_URL: 'https://api.anthropic.com/v1'
