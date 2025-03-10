@@ -1,0 +1,7 @@
+{
+  "repository": "pontus-devoteam/ai-consilium",
+  "issue_number": "14",
+  "issue_title": "Create one new function to return the current date",
+  "issue_body": "Create one new function to return the current date, put it in a utility.ts file\nYou do not need to write any tests for it.",
+  "headless": true
+}
